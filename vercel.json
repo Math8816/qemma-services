@@ -2,15 +2,15 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://qemma-api.onrender.com/api/:path*"
+      "destination": "https://qemma-backend.onrender.com/api/:path*"
     },
     {
       "source": "/auth/:path*",
-      "destination": "https://qemma-api.onrender.com/auth/:path*"
+      "destination": "https://qemma-backend.onrender.com/auth/:path*"
     },
     {
       "source": "/storage/:path*",
-      "destination": "https://qemma-api.onrender.com/storage/:path*"
+      "destination": "https://qemma-backend.onrender.com/storage/:path*"
     },
     {
       "source": "/(.*)",
