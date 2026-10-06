@@ -11,6 +11,10 @@
     {
       "source": "/storage/:path*",
       "destination": "https://qemma-api.onrender.com/storage/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
