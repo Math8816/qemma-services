@@ -126,6 +126,7 @@ export default function Customers() {
   <Link to="/users" style={styles.navLink}>👤 المستخدمون</Link>
   <Link to="/audit" style={styles.navLink}>📋 السجل</Link>
   <Link to="/backups" style={styles.navLink}>💾 النسخ</Link>
+  <Link to="/settings/2fa" style={styles.navLink}>🔐 2FA</Link>
 </div>
 
       <div style={styles.content}>

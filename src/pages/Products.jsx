@@ -139,6 +139,7 @@ export default function Products() {
   <Link to="/backups" style={styles.navLink}>
     💾 النسخ
   </Link>
+  <Link to="/settings/2fa" style={styles.navLink}>🔐 2FA</Link>
 </div>
 
       {/* User info */}

@@ -37,7 +37,86 @@ export async function login(email, password) {
     throw new Error(data.error_description || 'Login failed');
   }
 
-  saveToken(data.access_token, data.user);
+  // ─── إذا لا 2FA → احفظ الجلسة ───
+  if (!data.requires_2fa) {
+    saveToken(data.access_token, data.user);
+  }
+
+  return data;
+}
+
+// ═══════════════════════════════════════════════
+//  2FA Management API
+// ═══════════════════════════════════════════════
+
+export async function enable2FA() {
+  const token = getToken();
+  if (!token) throw new Error('No token');
+
+  const res = await fetch('/auth/v1/2fa/enable', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || data.error_description || 'Failed');
+  return data;
+}
+
+export async function verify2FA(code) {
+  const token = getToken();
+  if (!token) throw new Error('No token');
+
+  const res = await fetch('/auth/v1/2fa/verify', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ code }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || data.error_description || 'Failed');
+  return data;
+}
+
+export async function get2FAStatus() {
+  const token = getToken();
+  if (!token) throw new Error('No token');
+
+  const res = await fetch('/auth/v1/2fa/status', {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || data.error_description || 'Failed');
+  return data;
+}
+
+export async function disable2FA() {
+  const token = getToken();
+  if (!token) throw new Error('No token');
+
+  const res = await fetch('/auth/v1/2fa/disable', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || data.error_description || 'Failed');
+  return data;
+}
+
+export async function verify2FALogin(tempToken, code) {
+  const res = await fetch('/auth/v1/2fa/verify-login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ temp_token: tempToken, code }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || data.error_description || 'Invalid 2FA code');
   return data;
 }
 

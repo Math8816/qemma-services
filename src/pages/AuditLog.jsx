@@ -101,6 +101,7 @@ useEffect(() => {
         <Link to="/users" style={styles.navLink}>👤 المستخدمون</Link>
         <Link to="/audit" style={{ ...styles.navLink, ...styles.navActive }}>📋 السجل</Link>
         <Link to="/backups" style={styles.navLink}>💾 النسخ</Link>
+        <Link to="/settings/2fa" style={styles.navLink}>🔐 2FA</Link>
       </div>
 
       {/* Stats */}

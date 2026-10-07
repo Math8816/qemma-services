@@ -19,11 +19,21 @@ export default function Login() {
     setError('');
 
     try {
-      await login(email, password);
-      navigate('/products');
-    } catch (err) {
-      setError(err.message);
-    } finally {
+  const data = await login(email, password);
+
+  // ─── هل يحتاج 2FA؟ ───
+  if (data.requires_2fa) {
+    navigate('/2fa-verify', {
+      state: { tempToken: data.temp_token },
+    });
+    return;
+  }
+
+  // ─── لا يوجد 2FA → ادخل مباشرة ───
+  navigate('/products');
+} catch (err) {
+  setError(err.message);
+} finally {
       setLoading(false);
     }
   };
